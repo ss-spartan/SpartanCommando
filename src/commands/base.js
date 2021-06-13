@@ -354,11 +354,9 @@ class Command {
 		}).join(owners.length > 2 ? ', ' : ' ') : '';
 
 		const invite = this.client.options.invite;
-		return message.reply(stripIndents`
-			An error occurred while running the command: \`${err.name}: ${err.message}\`
-			You shouldn't ever receive an error like this.
-			Please contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}
-		`);
+		return message.channel.send(new MessageEmbed().setDescription(`>>> I ran into an error while executing the command:\n \`${err.name}: ${err.message}\`
+		\nPlease contact my owner ${owners}, or join my support server: [**Click Here**](https://discord.gg/77jSehTAeU)
+	    `).setColor("RED")).then(message=> message.delete({timeout: 10000}))
 	}
 
 	/**
